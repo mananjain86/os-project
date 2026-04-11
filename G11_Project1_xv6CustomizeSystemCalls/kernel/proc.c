@@ -146,6 +146,14 @@ found:
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
 
+  // Initialize IPC message box
+  initlock(&p->mbox.lock, "msgbox");
+  p->mbox.active = 0;
+  p->mbox.head = 0;
+  p->mbox.tail = 0;
+  p->mbox.count = 0;
+  memset(p->mbox.name, 0, MSGBOX_NAME);
+
   return p;
 }
 
@@ -169,6 +177,13 @@ freeproc(struct proc *p)
   p->killed = 0;
   p->xstate = 0;
   p->state = UNUSED;
+
+  // Reset IPC message box
+  p->mbox.active = 0;
+  p->mbox.head = 0;
+  p->mbox.tail = 0;
+  p->mbox.count = 0;
+  memset(p->mbox.name, 0, MSGBOX_NAME);
 }
 
 // Create a user page table for a given process, with no user memory,

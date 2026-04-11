@@ -13,3 +13,7 @@
 #define MAXPATH      128   // maximum file path name
 #define USERSTACK    1     // user stack pages
 
+// IPC message box parameters
+#define MSGBOX_NAME  16    // max name length for a message box
+#define MSG_SIZE     64    // max bytes per message
+#define MSG_SLOTS     8    // max messages buffered in a mailbox

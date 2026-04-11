@@ -105,3 +105,28 @@ uptime:
  li a7, SYS_uptime
  ecall
  ret
+.global msgbox_create
+msgbox_create:
+ li a7, SYS_msgbox_create
+ ecall
+ ret
+.global msgbox_send
+msgbox_send:
+ li a7, SYS_msgbox_send
+ ecall
+ ret
+.global msgbox_recv
+msgbox_recv:
+ li a7, SYS_msgbox_recv
+ ecall
+ ret
+.global msgbox_destroy
+msgbox_destroy:
+ li a7, SYS_msgbox_destroy
+ ecall
+ ret
+.global msgbox_count
+msgbox_count:
+ li a7, SYS_msgbox_count
+ ecall
+ ret

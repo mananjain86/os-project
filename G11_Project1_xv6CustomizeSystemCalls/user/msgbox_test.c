@@ -42,6 +42,9 @@ main(int argc, char *argv[])
     }
     printf("[child]  sent: \"%s\"\n", msg1);
 
+    // Small delay so parent prints its receive first
+    pause(5);
+
     // Receive reply from parent
     len = msgbox_recv(buf, sizeof(buf));
     if(len < 0){

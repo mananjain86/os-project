@@ -15,14 +15,16 @@ main(int argc, char *argv[])
   int pid = fork();
   if(pid == 0){
     // Child: send a message to parent's mailbox
-    pause(1); // let parent be ready
+    pause(2); // let parent be ready to receive
     msgbox_send("box1", "hi from child!", 15);
-    printf("[child] sent message\n");
+    printf("[child]  sent message\n");
     exit(0);
   }
 
-  // Parent: receive the message
+  // Parent: receive the message (blocks until child sends)
   int len = msgbox_recv(buf, sizeof(buf));
+  // Small delay so child's print finishes first
+  pause(3);
   printf("[parent] got: \"%s\" (%d bytes)\n", buf, len);
   printf("[parent] pending: %d\n", msgbox_count());
 

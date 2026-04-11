@@ -24,6 +24,11 @@ int getpid(void);
 char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
+int msgbox_create(char*);
+int msgbox_send(char*, void*, int);
+int msgbox_recv(void*, int);
+int msgbox_destroy(void);
+int msgbox_count(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

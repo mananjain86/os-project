@@ -42,3 +42,8 @@ entry("getpid");
 entry("sbrk");
 entry("pause");
 entry("uptime");
+entry("msgbox_create");
+entry("msgbox_send");
+entry("msgbox_recv");
+entry("msgbox_destroy");
+entry("msgbox_count");

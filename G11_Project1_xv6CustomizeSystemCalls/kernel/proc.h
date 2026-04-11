@@ -81,6 +81,23 @@ struct trapframe {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+// A single IPC message
+struct msg {
+  char data[MSG_SIZE];
+  int len;                   // actual bytes in this message
+};
+
+// Per-process message box (mailbox)
+struct msgbox {
+  char name[MSGBOX_NAME];    // name of this mailbox
+  struct msg msgs[MSG_SLOTS]; // circular buffer of messages
+  int head;                  // read index
+  int tail;                  // write index
+  int count;                 // number of messages in buffer
+  int active;                // 1 = mailbox exists, 0 = not created
+  struct spinlock lock;      // protects this mailbox
+};
+
 // Per-process state
 struct proc {
   struct spinlock lock;
@@ -106,4 +123,5 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
   int priority;
+  struct msgbox mbox;          // IPC message box
 };

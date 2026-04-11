@@ -49,3 +49,8 @@ entry("thread_join");
 entry("shmcreate");
 entry("shmat");
 entry("shmdt");
+entry("msgbox_create");
+entry("msgbox_send");
+entry("msgbox_recv");
+entry("msgbox_destroy");
+entry("msgbox_count");

@@ -134,3 +134,65 @@ sys_setpriority(void)
   p->priority = prio;
   return 0;
 }
+
+// IPC message box system calls
+
+uint64
+sys_msgbox_create(void)
+{
+  char name[MSGBOX_NAME];
+  if(argstr(0, name, MSGBOX_NAME) < 0)
+    return -1;
+  return msgbox_create_impl(name);
+}
+
+uint64
+sys_msgbox_send(void)
+{
+  char name[MSGBOX_NAME];
+  uint64 addr;
+  int len;
+  char buf[MSG_SIZE];
+
+  if(argstr(0, name, MSGBOX_NAME) < 0)
+    return -1;
+  argaddr(1, &addr);
+  argint(2, &len);
+  if(len <= 0 || len > MSG_SIZE)
+    return -1;
+  if(copyin(myproc()->pagetable, buf, addr, len) < 0)
+    return -1;
+  return msgbox_send_impl(name, buf, len);
+}
+
+uint64
+sys_msgbox_recv(void)
+{
+  uint64 addr;
+  int maxlen;
+  char buf[MSG_SIZE];
+  int len;
+
+  argaddr(0, &addr);
+  argint(1, &maxlen);
+  if(maxlen <= 0 || maxlen > MSG_SIZE)
+    return -1;
+  len = msgbox_recv_impl(buf, maxlen);
+  if(len < 0)
+    return -1;
+  if(copyout(myproc()->pagetable, addr, buf, len) < 0)
+    return -1;
+  return len;
+}
+
+uint64
+sys_msgbox_destroy(void)
+{
+  return msgbox_destroy_impl();
+}
+
+uint64
+sys_msgbox_count(void)
+{
+  return msgbox_count_impl();
+}

@@ -147,6 +147,7 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 	$U/_msgbox_test\
+	$U/_msgbox_demo\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

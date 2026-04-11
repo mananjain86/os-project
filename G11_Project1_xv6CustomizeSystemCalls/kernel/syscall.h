@@ -20,3 +20,8 @@
 #define SYS_link   19
 #define SYS_mkdir  20
 #define SYS_close  21
+#define SYS_msgbox_create  22
+#define SYS_msgbox_send    23
+#define SYS_msgbox_recv    24
+#define SYS_msgbox_destroy 25
+#define SYS_msgbox_count   26

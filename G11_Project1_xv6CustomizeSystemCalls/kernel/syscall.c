@@ -101,6 +101,11 @@ extern uint64 sys_unlink(void);
 extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
+extern uint64 sys_msgbox_create(void);
+extern uint64 sys_msgbox_send(void);
+extern uint64 sys_msgbox_recv(void);
+extern uint64 sys_msgbox_destroy(void);
+extern uint64 sys_msgbox_count(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -125,7 +130,12 @@ static uint64 (*syscalls[])(void) = {
 [SYS_unlink]  sys_unlink,
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
-[SYS_close]   sys_close,
+[SYS_close]    sys_close,
+[SYS_msgbox_create]  sys_msgbox_create,
+[SYS_msgbox_send]    sys_msgbox_send,
+[SYS_msgbox_recv]    sys_msgbox_recv,
+[SYS_msgbox_destroy] sys_msgbox_destroy,
+[SYS_msgbox_count]   sys_msgbox_count,
 };
 
 void

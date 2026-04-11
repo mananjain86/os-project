@@ -151,7 +151,7 @@ UPROGS=\
 	$U/_demo\
 	$U/_threademo\
 	$U/_shmtest\
-	
+	$U/_msgbox_test\
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
 

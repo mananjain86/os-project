@@ -107,3 +107,30 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_getprocinfo(void)
+{
+  struct proc *p = myproc();
+  uint64 pid_addr  = p->trapframe->a0;
+  uint64 prio_addr = p->trapframe->a1;
+
+  if(copyout(p->pagetable, pid_addr,
+             (char*)&p->pid, sizeof(p->pid)) < 0)
+    return -1;
+  if(copyout(p->pagetable, prio_addr,
+             (char*)&p->priority, sizeof(p->priority)) < 0)
+    return -1;
+  return 0;
+}
+
+uint64
+sys_setpriority(void)
+{
+  struct proc *p = myproc();
+  int prio = (int)p->trapframe->a0;
+  if(prio < 0 || prio > 19)
+    return -1;
+  p->priority = prio;
+  return 0;
+}

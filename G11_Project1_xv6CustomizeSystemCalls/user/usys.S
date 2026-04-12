@@ -105,3 +105,13 @@ uptime:
  li a7, SYS_uptime
  ecall
  ret
+.global getprocinfo
+getprocinfo:
+ li a7, SYS_getprocinfo
+ ecall
+ ret
+.global setpriority
+setpriority:
+ li a7, SYS_setpriority
+ ecall
+ ret

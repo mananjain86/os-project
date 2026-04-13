@@ -131,8 +131,8 @@ int main() {
     }
 
     printf("======================================\n");
-    printf("  Feature 7 : Error Handling\n");
-    printf("  Feature 8 : Logging\n");
+    printf("  Feature : Error Handling\n");
+    printf("  Feature : Logging\n");
     printf("  Sync      : Semaphores (POSIX)\n");
     printf("======================================\n");
 

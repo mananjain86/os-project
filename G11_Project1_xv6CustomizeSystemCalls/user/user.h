@@ -51,5 +51,7 @@ void printf(const char*, ...) __attribute__ ((format (printf, 1, 2)));
 // umalloc.c
 void* malloc(uint);
 void free(void*);
+int getprocinfo(int *pid_out, int *priority_out);
+int setpriority(int priority);
 int thread_create(void (*fn)(void*), void *arg); 
 int thread_join(int tid);

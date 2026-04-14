@@ -115,3 +115,13 @@ setpriority:
  li a7, SYS_setpriority
  ecall
  ret
+.global thread_create
+thread_create:
+ li a7, SYS_thread_create
+ ecall
+ ret
+.global thread_join
+thread_join:
+ li a7, SYS_thread_join
+ ecall
+ ret

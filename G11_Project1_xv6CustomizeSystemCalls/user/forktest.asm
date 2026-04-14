@@ -45,7 +45,7 @@ forktest(void)
 
   print("fork test\n");
   30:	00000517          	auipc	a0,0x0
-  34:	41050513          	addi	a0,a0,1040 # 440 <setpriority+0xe>
+  34:	42050513          	addi	a0,a0,1056 # 450 <thread_join+0xe>
   38:	fc9ff0ef          	jal	0 <print>
 
   for(n=0; n<N; n++){
@@ -67,7 +67,7 @@ forktest(void)
   if(n == N){
     print("fork claimed to work N times!\n");
   52:	00000517          	auipc	a0,0x0
-  56:	43e50513          	addi	a0,a0,1086 # 490 <setpriority+0x5e>
+  56:	44e50513          	addi	a0,a0,1102 # 4a0 <thread_join+0x5e>
   5a:	fa7ff0ef          	jal	0 <print>
     exit(1);
   5e:	4505                	li	a0,1
@@ -80,7 +80,7 @@ forktest(void)
     if(wait(0) < 0){
       print("wait stopped early\n");
   68:	00000517          	auipc	a0,0x0
-  6c:	3e850513          	addi	a0,a0,1000 # 450 <setpriority+0x1e>
+  6c:	3f850513          	addi	a0,a0,1016 # 460 <thread_join+0x1e>
   70:	f91ff0ef          	jal	0 <print>
       exit(1);
   74:	4505                	li	a0,1
@@ -91,7 +91,7 @@ forktest(void)
   if(wait(0) != -1){
     print("wait got too many\n");
   7a:	00000517          	auipc	a0,0x0
-  7e:	3ee50513          	addi	a0,a0,1006 # 468 <setpriority+0x36>
+  7e:	3fe50513          	addi	a0,a0,1022 # 478 <thread_join+0x36>
   82:	f7fff0ef          	jal	0 <print>
     exit(1);
   86:	4505                	li	a0,1
@@ -114,7 +114,7 @@ forktest(void)
 
   print("fork test OK\n");
   aa:	00000517          	auipc	a0,0x0
-  ae:	3d650513          	addi	a0,a0,982 # 480 <setpriority+0x4e>
+  ae:	3e650513          	addi	a0,a0,998 # 490 <thread_join+0x4e>
   b2:	f4fff0ef          	jal	0 <print>
 }
   b6:	60e2                	ld	ra,24(sp)
@@ -848,3 +848,23 @@ setpriority:
  434:	00000073          	ecall
  ret
  438:	8082                	ret
+
+000000000000043a <thread_create>:
+.global thread_create
+thread_create:
+ li a7, SYS_thread_create
+ 43a:	48e1                	li	a7,24
+ ecall
+ 43c:	00000073          	ecall
+ ret
+ 440:	8082                	ret
+
+0000000000000442 <thread_join>:
+.global thread_join
+thread_join:
+ li a7, SYS_thread_join
+ 442:	48e5                	li	a7,25
+ ecall
+ 444:	00000073          	ecall
+ ret
+ 448:	8082                	ret

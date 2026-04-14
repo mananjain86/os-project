@@ -20,3 +20,38 @@ void shminit(void) {
     shm_table[i].ref_count = 0;
   }
 }
+
+uint64 sys_shmcreate(void) {
+  int key;
+  argint(0, &key);
+
+  acquire(&shm_lock);
+
+  // Check if segment already exists
+  for (int i = 0; i < SHM_MAX; i++) {
+    if (shm_table[i].key == key && shm_table[i].pa != 0) {
+      release(&shm_lock);
+      return i; // Return shmid
+    }
+  }
+
+  // Find an empty slot
+  for (int i = 0; i < SHM_MAX; i++) {
+    if (shm_table[i].pa == 0) {
+      uint64 pa = (uint64)kalloc();
+      if (pa == 0) {
+        release(&shm_lock);
+        return -1; // Out of memory
+      }
+      memset((void*)pa, 0, PGSIZE);
+      shm_table[i].key = key;
+      shm_table[i].pa = pa;
+      shm_table[i].ref_count = 0; // It will be incremented on shmat
+      release(&shm_lock);
+      return i; // Return shmid
+    }
+  }
+
+  release(&shm_lock);
+  return -1; // Table full
+}

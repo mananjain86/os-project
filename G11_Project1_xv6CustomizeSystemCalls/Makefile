@@ -19,6 +19,7 @@ OBJS = \
   $K/syscall.o \
   $K/sysproc.o \
   $K/sysproc_thread.o \
+  $K/shm.o \
   $K/bio.o \
   $K/fs.o \
   $K/log.o \
@@ -148,6 +149,7 @@ UPROGS=\
 	$U/_dorphan\
 	$U/_demo\
 	$U/_threademo\
+	$U/_shmtest\
 	
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

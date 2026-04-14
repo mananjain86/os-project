@@ -46,3 +46,6 @@ entry("getprocinfo");
 entry("setpriority");
 entry("thread_create"); 
 entry("thread_join");
+entry("shmcreate");
+entry("shmat");
+entry("shmdt");

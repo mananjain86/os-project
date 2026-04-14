@@ -55,3 +55,6 @@ int getprocinfo(int *pid_out, int *priority_out);
 int setpriority(int priority);
 int thread_create(void (*fn)(void*), void *arg); 
 int thread_join(int tid);
+int shmcreate(int key);
+uint64 shmat(int shmid);
+int shmdt(int shmid);

@@ -105,6 +105,9 @@ extern uint64 sys_getprocinfo(void);
 extern uint64 sys_setpriority(void);
 extern uint64 sys_thread_create(void); 
 extern uint64 sys_thread_join(void);
+extern uint64 sys_shmcreate(void);
+extern uint64 sys_shmat(void);
+extern uint64 sys_shmdt(void);
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
 static uint64 (*syscalls[])(void) = {
@@ -133,6 +136,9 @@ static uint64 (*syscalls[])(void) = {
 [SYS_setpriority]  sys_setpriority,
 [SYS_thread_create] sys_thread_create, 
 [SYS_thread_join] sys_thread_join,
+[SYS_shmcreate] sys_shmcreate,
+[SYS_shmat]    sys_shmat,
+[SYS_shmdt]    sys_shmdt,
 };
 
 void

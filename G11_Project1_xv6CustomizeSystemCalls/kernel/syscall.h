@@ -24,3 +24,6 @@
 #define SYS_setpriority   23
 #define SYS_thread_create 24 
 #define SYS_thread_join   25
+#define SYS_shmcreate 26
+#define SYS_shmat     27
+#define SYS_shmdt     28

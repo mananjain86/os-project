@@ -55,3 +55,31 @@ uint64 sys_shmcreate(void) {
   release(&shm_lock);
   return -1; // Table full
 }
+
+uint64 sys_shmat(void) {
+  int shmid;
+  argint(0, &shmid);
+
+  if (shmid < 0 || shmid >= SHM_MAX) return -1;
+
+  acquire(&shm_lock);
+  if (shm_table[shmid].pa == 0) {
+    release(&shm_lock);
+    return -1;
+  }
+
+  struct proc *p = myproc();
+  uint64 va = PGROUNDUP(p->sz);
+
+  // Map the shared physical page to the process's page table
+  if (mappages(p->pagetable, va, PGSIZE, shm_table[shmid].pa, PTE_W | PTE_R | PTE_U) < 0) {
+    release(&shm_lock);
+    return -1;
+  }
+
+  shm_table[shmid].ref_count++;
+  p->sz = va + PGSIZE; // Increase process size to include the shared page
+  release(&shm_lock);
+
+  return va; // Return the virtual address where it is attached
+}

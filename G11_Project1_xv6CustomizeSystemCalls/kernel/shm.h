@@ -1,8 +1,7 @@
 #ifndef SHM_H
 #define SHM_H
 
-#include "types.h"
-#include "spinlock.h"
+// Note: include "types.h" and "spinlock.h" before including this header.
 
 // Maximum number of shared memory segments
 #define SHM_MAX 64

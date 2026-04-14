@@ -1,0 +1,2 @@
+This is a test file for multithreaded copying and metadata display.
+Hello World!

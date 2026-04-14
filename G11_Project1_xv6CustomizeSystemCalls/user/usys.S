@@ -125,3 +125,18 @@ thread_join:
  li a7, SYS_thread_join
  ecall
  ret
+.global shmcreate
+shmcreate:
+ li a7, SYS_shmcreate
+ ecall
+ ret
+.global shmat
+shmat:
+ li a7, SYS_shmat
+ ecall
+ ret
+.global shmdt
+shmdt:
+ li a7, SYS_shmdt
+ ecall
+ ret

@@ -188,3 +188,4 @@ void            virtio_disk_intr(void);
 
 // shm.c
 void            shminit(void);
+void            shm_release(pagetable_t, uint64);

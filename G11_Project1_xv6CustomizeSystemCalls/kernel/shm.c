@@ -124,3 +124,27 @@ uint64 sys_shmdt(void) {
   release(&shm_lock);
   return 0;
 }
+
+// Called when a process is freed to ensure shared memory is detached.
+void shm_release(pagetable_t pagetable, uint64 sz) {
+  acquire(&shm_lock);
+  for(int i = 0; i < SHM_MAX; i++) {
+    if(shm_table[i].pa != 0) {
+      for (uint64 a = 0; a < sz; a += PGSIZE) {
+        pte_t *pte = walk(pagetable, a, 0);
+        if (pte != 0 && (*pte & PTE_V) && PTE2PA(*pte) == shm_table[i].pa) {
+          uvmunmap(pagetable, a, 1, 0); // Unmap without freeing underlying pa
+          shm_table[i].ref_count--;
+          if (shm_table[i].ref_count <= 0) {
+            kfree((void*)shm_table[i].pa);
+            shm_table[i].pa = 0;
+            shm_table[i].key = 0;
+            shm_table[i].ref_count = 0;
+          }
+          break;
+        }
+      }
+    }
+  }
+  release(&shm_lock);
+}
